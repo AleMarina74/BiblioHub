@@ -14,7 +14,7 @@ def clients(request):
     context = {
         "page_heading": "Clientes",
         "clients": paginator.get_page(page_number),
-        "field_keys": [field.attname for field in Cliente._meta.get_fields()],
+        "field_keys": [field for field in Cliente._meta.get_fields()],
         "USER": request.user
     }
 
@@ -44,7 +44,7 @@ class ClientesTemplateView(LoginRequiredMixin,TemplateView):
         context['clients']= paginator.get_page(page_number)
         context['USER'] = self.request.user
         context['page_heading'] = 'Clientes'
-        context["field_keys"] = [field.verbose_name for field in Cliente._meta.get_fields()]
+        context["field_keys"] = [field for field in Cliente._meta.get_fields()]
 
         return context
 

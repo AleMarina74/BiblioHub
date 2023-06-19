@@ -16,7 +16,7 @@ def books(request):
     context = {
         "page_heading": "Libros",
         "books": paginator.get_page(page_number),
-        "field_keys": [field.attname for field in Libro._meta.get_fields()],
+        "field_keys": [field for field in Libro._meta.get_fields()],
         "USER": request.user
     }
     return render(request=request, template_name='books.html', context=context)
@@ -39,7 +39,7 @@ class BooksTemplateView(TemplateView,LoginRequiredMixin):
         context['books']= paginator.get_page(page_number)
         context['USER'] = self.request.user
         context['page_heading'] = 'Libros'
-        context["field_keys"] = [field.verbose_name for field in Libro._meta.get_fields()]
+        context["field_keys"] = [field for field in Libro._meta.get_fields()]
 
         return context
 
@@ -54,7 +54,7 @@ class BookTemplateView(TemplateView,LoginRequiredMixin):
         context["page_heading"] = "Libro"
         context["book"] = book
         context["USER"] = self.request.user
-        context["field_keys"] = [field.verbose_name for field in Libro._meta.get_fields()]
+        context["field_keys"] = [field for field in Libro._meta.get_fields()]
         return context
 
 
