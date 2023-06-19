@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% csrf_token %}
+    <h1>Detalle del Autor</h1>
+    <br>
+        <p>Nombre: {{ autor.nombre }}</p> 
+        <br>
+
+        <a href="{% url 'updateautor' autor.id %}" class="button">Editar</a>
+        
+{% endblock %}

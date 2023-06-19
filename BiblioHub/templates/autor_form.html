@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h3>Crear/Actualizar Libro</h3>
+    <h3>Crear/Actualizar Autor</h3>
 
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Guardar</button>
-        <a href="{% url 'createautor' %}" class="button">Nuevo Autor</a>
-        <a href="{% url 'creategenero' %}" class="button">Nuevo Genero</a>
     </form>
 {% endblock %}
