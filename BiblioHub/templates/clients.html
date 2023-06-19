@@ -5,23 +5,31 @@
         <thead>
             <tr>
                 {% for key in field_keys %}
-                    <th>{{ key }}</th>
+                    {% if key != 'deleted_at' %}
+                            <th>{{ key }}</th>
+                    {% endif %}
                 {% endfor %}
             </tr>
         </thead>
         <tbody>
-            {% if clientes|length %}
-                {% for client in clientes %}
+            {% if clients|length %}
+                {% for client in clients %}
                     <tr>
-                        <td>{{ client.id }}</td>
+                        <td><a href="{% url 'client' id=client.id %}">{{ client.id }}</a></td>
                         <td>{{ client.nombre}}</td>
-                        <td><a href="{% url 'cliente' id=client.id %}">{{ client.apellido }}</a></td>
+                        <td>{{ client.apellido }}</td>
                         <td>{{ client.dni }}</td>
+                        <td>{{ client.fecha_nacimiento }}</td>
                         <td>{{ client.email }}</td>
+                        <td>
+                            {% if client.active %}
+                                <input type="checkbox" checked disabled>
+                            {% else %}
+                                <input type="checkbox" disabled>
+                            {% endif %}
+                        </td>
                         <td>{{ client.domicilio }}</td>
-                        {% if client.disponible %}
-                            <td>{{ client.disponible }}</td>
-                        {% endif %}
+                        <td>{{ client.disponible }}</td>
                     </tr>
                 {% endfor %}
             {% else %}

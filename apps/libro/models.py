@@ -1,5 +1,5 @@
 from django.db import models
-
+ 
 class Libro(models.Model):
     titulo= models.CharField(max_length=200, verbose_name='Nombre')
     autor= models.ForeignKey(
@@ -25,6 +25,8 @@ class Libro(models.Model):
     def __str__(self):
         return self.titulo
     
+ 
+
     @property
     def nombre_autor(self):
         return self.autor.nombre
@@ -55,3 +57,16 @@ class Libro(models.Model):
 
     def delete(self,*args,**kwargs):
         self.borrado_logico()
+
+#class Prestamo(models.Model):
+    #cliente = models.ForeignKey(Libro, on_delete=models.DO_NOTHING)
+    #fecha_prestamo = models.DateField(default=datetime.today)
+    #fecha_devolucion = models.DateField(null=True, blank=True)
+    #devolucion=models.BooleanField(default=False)
+     #def prestamos(self):
+        #self.devolucion = False
+        #super().save()
+    
+    #def devolucion(self):
+        #self.disponible = True
+        #super().save()

@@ -51,6 +51,7 @@ APPS_SISTEMAS =[
     'apps.libro',
     'apps.usuario',
     'apps.utils',
+    'apps.prestamo',
 ] 
 
 INSTALLED_APPS= DJANGO_APPS + APPS_SISTEMAS

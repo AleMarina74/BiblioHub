@@ -5,7 +5,6 @@ from django.views.generic.base import TemplateView
 from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 
 @login_required(login_url='ingresar')
@@ -15,13 +14,13 @@ def clients(request):
     context = {
         "page_heading": "Clientes",
         "clients": paginator.get_page(page_number),
-        "field_keys": [field.attname for field in Cliente._meta.get_fields()],
+        "field_keys": [field for field in Cliente._meta.get_fields()],
         "USER": request.user
     }
 
     return render(request=request, template_name='clients.html', context=context)
 
-@login_required(login_url='ingresar')
+@login_required(login_url='login')
 def client(request, id):
     clients = Cliente.objects.filter(id=id)
     context = {
@@ -45,14 +44,14 @@ class ClientesTemplateView(LoginRequiredMixin,TemplateView):
         context['clients']= paginator.get_page(page_number)
         context['USER'] = self.request.user
         context['page_heading'] = 'Clientes'
-        context["field_keys"] = [field.verbose_name for field in Cliente._meta.get_fields()]
+        context["field_keys"] = [field for field in Cliente._meta.get_fields()]
 
         return context
 
 
 class ClienteList(LoginRequiredMixin, ListView):
     model = Cliente
-    template_name = 'cliente.html'
+    template_name = 'clients.html'
     context_object_name = 'clientes'
 
  
@@ -60,12 +59,12 @@ class ClienteCreate(LoginRequiredMixin, CreateView):
     model = Cliente
     template_name = 'client_form.html'
     fields = ['nombre', 'apellido', 'dni', 'fecha_nacimiento','email','domicilio']
-    success_url = reverse_lazy('clientes')
+    success_url = reverse_lazy('clients')
 
 
 class ClienteDetail(LoginRequiredMixin, DetailView):
     model = Cliente
-    template_name = 'cliente_detalle.html'
+    template_name = 'client_detail.html'
     context_object_name = 'clientes'
 
 
@@ -73,12 +72,12 @@ class ClienteUpdate(LoginRequiredMixin, UpdateView):
     model = Cliente
     template_name = 'client_form.html'
     fields = ['nombre', 'apellido', 'dni', 'fecha_nacimiento','email','domicilio']
-    success_url = reverse_lazy('clientes')
+    success_url = reverse_lazy('clients')
 
 
 class ClienteDelete(LoginRequiredMixin, DeleteView):
     model = Cliente
-    template_name = 'cliente_confirm_delete.html'
-    success_url = reverse_lazy('clientes')
+    template_name = 'client_confirm_delete.html'
+    success_url = reverse_lazy('clients')
 
 
