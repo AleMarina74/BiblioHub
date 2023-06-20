@@ -38,14 +38,21 @@ class ClientesTemplateView(LoginRequiredMixin,TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        clientes = Cliente.objects.all()
+        clientes = Cliente.objects.filter(active=True).order_by('nombre')
         paginator = Paginator(clientes,self.paginate_by)
         page_number = self.request.GET.get("page") 
         context['clients']= paginator.get_page(page_number)
         context['USER'] = self.request.user
         context['page_heading'] = 'Clientes'
-        context["field_keys"] = [field for field in Cliente._meta.get_fields()]
-
+        #context["field_keys"] = [field for field in Cliente._meta.get_fields()]
+        fields = [
+        {'name': 'nombre', 'label': 'nombre', 'show': True},
+        {'name': 'apellido', 'label': 'apellido', 'show': True},
+        {'name': 'dni', 'label': 'dni', 'show': True},
+        {'name': 'domicilio', 'label': 'domicilio', 'show': True},
+        {'name': 'disponible', 'label': 'Disponible', 'show': True},
+  ]
+        context['fields'] = fields
         return context
 
 
